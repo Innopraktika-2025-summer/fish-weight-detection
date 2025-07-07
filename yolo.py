@@ -1,5 +1,6 @@
 from ultralytics import YOLO
 import pandas as pd
+import cv2
 class model:
     def __init__(self, conf1=float, name=str):
         self.conf1=conf1
@@ -7,8 +8,10 @@ class model:
     def load_model(self):
         global model
         model = YOLO(self.name)
-    def res(self,src):
-        results = model.predict(source=src, conf=self.conf1, save=False, show=True)
+    def res(self,frame):
+        results = model.predict(source=frame, conf=self.conf1, save=False, show=False)
+        annotated_frame = results[0].plot()
+
         boxes=results[0].boxes
         for box in boxes:
             x1, y1 ,x2, y2 = box.xyxy[0].tolist()
@@ -34,4 +37,4 @@ class model:
                          "center_x": center_x,
                          "center_y": center_y})
             df = pd.DataFrame(data)
-            return df
+            return (df), (annotated_frame)

@@ -62,6 +62,7 @@ def saving_photo(frame):
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         filename = f"photo_{timestamp}.jpg"
         return filename, timestamp
+
 def saving_photo_1(frame,filename,save_folder):        # Сохраняем изображение
     if frame[0]:
         filepath = os.path.join(save_folder, filename)
@@ -94,24 +95,26 @@ def dict_1(dict1, N, frame, timestamp, result):
 def start_vidio(dict1, camera, save_folder):
     N = 1
     result = 1  # kik
-    while N != 0:
+    while True:
 
         frame, N = capture_cameras(camera)
 
         '''photo_output(frame)'''
         filename, timestamp = saving_photo(frame)
         '''saving_photo_1(frame,filename,save_folder)'''
-        result=yolo.res(frame[1])
+        result, annotated_frame=yolo.res(frame[1])
+
         #photo_output(result)
         dict_1(dict1, N, frame, timestamp, result)
         # Выход при нажатии Q
         if cv2.waitKey(1) == ord('q') & 0xFF == ord('q'):
             N = 0
-            closing_the_screen(camera)
-            end(camera)
+            #closing_the_screen(camera)
+            #end(camera)
             return dict1
         N += 1
-        time.sleep(3)
+        cv2.imshow('video', annotated_frame)
+        time.sleep(0.5)
 
 
 def main():
@@ -121,6 +124,6 @@ def main():
     camera = connection_of_cameras()
     photo_size(camera,1920,1080)
     check_cameras(camera)
-    dict1 = start_vidio(dict1, camera, save_folder)
+    start_vidio(dict1, camera, save_folder)
     end(camera)
 main()
