@@ -18,7 +18,7 @@ class Camera1:
         self.photo_size()
         self.check_cameras()
         self.start_vidio()
-        self.end()
+        #self.end()
         return self.dict1
 
         
@@ -88,10 +88,12 @@ class Camera1:
             
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 self.closing_the_screen()
+                self.camera.release()
+                cv2.destroyAllWindows()
                 break
             cv2.imshow('video', annotated_frame)  #creating window with video
             N += 1
             '''time.sleep(3)'''
             
-webcam=Camera1(1920, 1080, 0)
-webcam.main()
+'''webcam=Camera1(1920, 1080, 0)
+webcam.main()'''
