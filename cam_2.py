@@ -9,7 +9,7 @@ class Camera1:
         self.width=width
         self.height=height
         self.cam_name=cam_name
-    yolo = model(0.5, 'yolo11x.pt')
+    yolo = model(0.5, 'C:/ML/Yolo_model/best.pt')
     yolo.load_model()
     def main(self):
         self.dict1 = []
@@ -94,6 +94,5 @@ class Camera1:
             cv2.imshow('video', annotated_frame)  #creating window with video
             N += 1
             '''time.sleep(3)'''
-            
-'''webcam=Camera1(1920, 1080, 0)
-webcam.main()'''
+webcam=Camera1(1920, 1080, 0)
+webcam.main()
