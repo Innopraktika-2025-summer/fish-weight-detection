@@ -3,20 +3,24 @@ import os
 import time
 from datetime import datetime
 from yolo import model
-yolo = model(0.5, 'yolo11x.pt')
-yolo.load_model()
+
 class Camera1:
-    def __init__(self):
-        pass
+    def __init__(self, width, height, cam_name):
+        self.width=width
+        self.height=height
+        self.cam_name=cam_name
+    yolo = model(0.5, 'yolo11x.pt')
+    yolo.load_model()
     def main(self):
         self.dict1 = []
         self.save_folder = self.saving_on_desktop()
         self.camera = self.connection_of_cameras()
-        self.photo_size(1920, 1080)
+        self.photo_size()
         self.check_cameras()
         self.start_vidio()
         self.end()
-        return self.dict1 
+        return self.dict1
+
         
     def saving_on_desktop(self):
         desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
@@ -25,12 +29,12 @@ class Camera1:
         return save_folder
 
     def connection_of_cameras(self):
-        camera = cv2.VideoCapture(0)
+        camera = cv2.VideoCapture(self.cam_name)
         return camera
 
-    def photo_size(self, dlina, visota):
-        self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, dlina)
-        self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, visota)
+    def photo_size(self):
+        self.camera.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
+        self.camera.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
         
     def check_cameras(self):
         if not self.camera.isOpened():
@@ -76,7 +80,7 @@ class Camera1:
             frame, error = self.capture_cameras()
             if error:
                 break
-            result, annotated_frame = yolo.res(frame)
+            result, annotated_frame = self.yolo.res(frame)
                 
             '''self.photo_output(frame)'''
             '''timestamp = self.saving_photo(frame)'''
@@ -89,5 +93,5 @@ class Camera1:
             N += 1
             '''time.sleep(3)'''
             
-webcam=Camera1()
+webcam=Camera1(1920, 1080, 0)
 webcam.main()
