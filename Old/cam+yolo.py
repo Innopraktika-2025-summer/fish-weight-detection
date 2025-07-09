@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 from ultralytics import YOLO
 import pandas as pd
-from yolo import model
+from src.model.yolo import model
 
 
 '''esktop = os.path.join(os.path.expanduser('~'), 'Desktop')
