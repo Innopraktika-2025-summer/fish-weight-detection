@@ -9,7 +9,7 @@ class model:            #creating model class
         global model
         model = YOLO(self.name)
     def res(self,frame):
-        results = model.predict(source=frame, conf=self.conf1, save=False, show=False)
+        results = model.track(source=frame, conf=self.conf1, save=False, show=False)
         annotated_frame = results[0].plot()
 
         boxes=results[0].boxes
