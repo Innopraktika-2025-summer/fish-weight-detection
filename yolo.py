@@ -1,7 +1,7 @@
-from ultralytics import YOLO
+from ultralytics import YOLO #import of neurolink package
 import pandas as pd
 import cv2
-class model:
+class model:            #creating model class
     def __init__(self, conf1=float, name=str):
         self.conf1=conf1
         self.name=name
@@ -24,7 +24,7 @@ class model:
             class_name=model.names[class_id]
             confidence=float(box.conf)
             data=[]
-            data.append({"class id": class_id,
+            data.append({"class id": class_id,          #frame data
                          "class name": class_name,
                          "confidence": confidence,
                          "x1": x1,

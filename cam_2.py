@@ -8,7 +8,6 @@ yolo.load_model()
 class Camera1:
     def __init__(self):
         pass
-
     def main(self):
         self.dict1 = []
         self.save_folder = self.saving_on_desktop()
@@ -35,14 +34,14 @@ class Camera1:
         
     def check_cameras(self):
         if not self.camera.isOpened():
-            print("Ой! Камера не включена 😢")
+            print("Camera isn't connected")
             exit()
-        print("Камера работает! Нажми 'Q', чтобы выйти")
+        print("Camera works! Press Q to quit")
 
     def capture_cameras(self):
         ret, frame = self.camera.read()
         if not ret:
-            print("Не могу получить кадр...")
+            print("Can't recieve frame")
             return None, 1
         return frame, 0
 
@@ -54,7 +53,7 @@ class Camera1:
         filename = f"photo_{timestamp}.jpg"
         filepath = os.path.join(self.save_folder, filename)
         cv2.imwrite(filepath, frame)
-        print(f"Снимок сохранен: {filepath}")
+        print(f"Frame saved: {filepath}")
         return timestamp
 
     def closing_the_screen(self):           
@@ -86,7 +85,7 @@ class Camera1:
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 self.closing_the_screen()
                 break
-            cv2.imshow('video', annotated_frame)
+            cv2.imshow('video', annotated_frame)  #creating window with video
             N += 1
             '''time.sleep(3)'''
             
